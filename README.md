@@ -1,12 +1,12 @@
-# Bird and Bunny
+# Designs
 
-This project simply preserves an old [website] that seems to be still useful for those interested in keeping birds or bunnies as pets, especially parrots, especially caiques.
+This project simply preserves an old [website] featuring patterns designed c. 2010.
 
-[website]: https://birdandbunny.hoza.us
+[website]: https://designs.hoza.us
 
 ## COPYRIGHT
 
-This project is copyright (c) 2012 Julianna Hoza. All rights reserved.
+This project is copyright (c) 2010 Julianna Hoza. All rights reserved.
 
 ## CONTRIBUTING
 
@@ -14,7 +14,7 @@ Thanks for your interest in contributing to this project. Please note that this 
 
 NOTE: All Contributions you make become the property of the project copyright owner. Please see [CONTRIBUTING.md] for more information.
 
-[start a discussion]: https://github.com/hoza-labs/birdandbunny/issues
-[submit a proposed change]: https://github.com/hoza-labs/birdandbunny/pulls
+[start a discussion]: https://github.com/hoza-labs/designs/issues
+[submit a proposed change]: https://github.com/hoza-labs/designs/pulls
 
 [CONTRIBUTING.md]: ./CONTRIBUTING.md
