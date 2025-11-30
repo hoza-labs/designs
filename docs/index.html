@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Julianna's Designs</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script type="text/javascript" src="javascript/kenburns.js"></script>
+    <script>
+        var allImages = [
+            'circles.jpg',
+            'coloredSquares.jpg',
+            'leaves.jpg',
+            'rings.jpg',
+            'semi-circles.jpg',
+            'shapes.jpg',
+            'symmetricTile1.jpg',
+            'squares.jpg',
+            'symmetricTile2.jpg',
+            'symmetricTile3.jpg',
+            'symmetricTile4.jpg',
+            'teardrops.jpg',
+            'trapezoids.jpg',
+            'triangles.jpg',
+            'worms.jpg'
+        ]
+
+        // shuffle the array
+        for (let i = allImages.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+        }
+    </script>
+</head>
+<body style="margin: 0px;">
+    <div id="slideshow" style="margin: 0px; overflow: hidden;">
+        <a href="?showfiles">
+            <canvas id="kenburns" style="width: 100%; height: 100%;">
+                <p>Your browser doesn't support canvas!</p>
+            </canvas>
+        </a>
+    </div>
+    <div id="files" style="display: none;">
+        <a href="index.html">Back to Slideshow</a>
+        <div id="filesList" class="thumbnail-grid"></div>
+    </div>
+    <script type="text/javascript">
+
+        function main() {
+            var params = new URLSearchParams(window.location.search);
+
+            // default: start slideshow
+            if (!params.has('showfiles')) {
+                startSlideshow();
+                return
+            }
+
+            // ?showfiles is present
+            populateFilesList();
+            document.getElementById('slideshow').style.display = 'none';
+            document.getElementById('files').style.display = 'block';
+        }
+
+        function startSlideshow()
+        {
+            var canvas = document.getElementById("kenburns");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+                $('#kenburns').kenburns({
+                    images: allImages,
+                    frames_per_second: 30,
+                    display_time: 30000,
+                    fade_time: 1000,
+                    zoom: 2,
+                    background_color:'#ffffff',
+                    post_render_callback:function($canvas, context) {
+                        // Called after the effect is rendered
+                        // Draw anything you like on to of the canvas
+
+                        context.save();
+                        context.fillStyle = '#000';
+                        context.font = 'bold 20px sans-serif';
+                        var width = $canvas.width();
+                        var height = $canvas.height();												
+                        var text = "https://designs.hoza.us/";
+                        var metric = context.measureText(text);
+
+                        context.fillStyle = '#fff';
+
+                        context.shadowOffsetX = 3;
+                        context.shadowOffsetY = 3;
+                        context.shadowBlur = 4;
+                        context.shadowColor = 'rgba(0, 0, 0, 0.8)';
+
+                        context.fillText(text, width - metric.width - 8, height - 8);						
+
+                        context.restore();						
+                    }
+                });				
+        }
+
+        function populateFilesList() {
+            var container = document.getElementById('filesList');
+            if (!container) return;
+
+            // Clear existing content (in case this runs multiple times)
+            container.innerHTML = '';
+
+            for (var i = 0; i < allImages.length; i++) {
+                var file = allImages[i];
+
+                // wrapper for the thumbnail and caption
+                var item = document.createElement('div');
+                item.className = 'thumbnail-item';
+
+                // link to the full image
+                var a = document.createElement('a');
+                a.href = file;
+                a.title = file;
+                // a.target = '_blank'; // uncomment to open full image in new tab
+
+                // image element for the thumbnail (height constrained by CSS)
+                var img = document.createElement('img');
+                img.src = file;
+                img.alt = file;
+
+                a.appendChild(img);
+                item.appendChild(a);
+
+                // optional caption
+                var caption = document.createElement('span');
+                caption.className = 'thumbnail-caption';
+                caption.textContent = file;
+                item.appendChild(caption);
+
+                container.appendChild(item);
+            }
+        }
+
+        main();
+    </script>
+    <style>
+        /* Thumbnail grid layout */
+        .thumbnail-grid {
+            display: flex;
+            flex-wrap: wrap; /* automatic wrapping */
+            gap: 12px; /* spacing between thumbnails */
+            padding: 12px;
+            align-items: flex-start;
+        }
+
+        /* Each thumbnail wrapper is a small container (anchor inside) */
+        .thumbnail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .thumbnail-item a {
+            display: inline-block;
+            height: 400px; /* requested height */
+            overflow: hidden;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            text-decoration: none;
+            background: #f6f6f6;
+        }
+
+        /* Make sure the image is 400px tall and keeps aspect ratio (auto width) */
+        .thumbnail-grid img {
+            height: 100%;
+            width: auto;
+            display: block;
+            object-fit: cover; /* crop the image nicely when needed */
+        }
+
+        /* Small caption / filename below the thumbnail if needed */
+        .thumbnail-caption {
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            margin-top: 4px;
+            display: block;
+        }
+        /* constrain caption width to the thumbnail width */
+        .thumbnail-item .thumbnail-caption {
+            max-width: 100%;
+            padding: 0 4px;
+            word-break: break-word;
+        }
+    </style>
+</body>
+</html>
